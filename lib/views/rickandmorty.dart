@@ -39,6 +39,36 @@ class _RickAndMortyState extends State<RickAndMorty> {
                 return Expanded(
                   child: ListView(
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: snapshot.data!.previous == ""
+                                ? null
+                                : () {
+                                    setState(() {
+                                      rickAndMortyResponse =
+                                          rick_morty_api.fetchCharacter(
+                                              url: snapshot.data!.previous);
+                                    });
+                                  },
+                            child: const Text("Previous"),
+                          ),
+                          Text('${snapshot.data!.currentPage - 1}'),
+                          ElevatedButton(
+                            onPressed: snapshot.data!.next == ""
+                                ? null
+                                : () {
+                                    setState(() {
+                                      rickAndMortyResponse =
+                                          rick_morty_api.fetchCharacter(
+                                              url: snapshot.data!.next);
+                                    });
+                                  },
+                            child: const Text("Next"),
+                          ),
+                        ],
+                      ),
                       for (var character in snapshot.data!.characters)
                         CharacterCard(character: character)
                     ],
