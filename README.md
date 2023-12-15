@@ -1,16 +1,27 @@
-# todolist
+# Flutter practice
 
-A new Flutter project.
+## Ephemeral state managemente
 
-## Getting Started
+### 1. [Stateful Widget](./lib/views/todo.dart)
 
-This project is a starting point for a Flutter application.
+### 2. [Stateful Widget with Async/Future](./lib/views/rickandmorty.dart)
 
-A few resources to get you started if this is your first Flutter project:
+## Data fetching
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### 1. [Http + Future usage](./lib/data/api/rick_morty_api.dart)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### 2. [FutureBuilder usage](./lib/views/rickandmorty.dart)
+
+## Serialization
+
+To format data the recommended way is using Classes for serialization.
+
+### [Create a model class(Character)](./lib/data/api/rick_morty_api.dart)
+
+### [Create a model class(Characters)](./lib/data/api/rick_morty_api.dart)
+
+## Navigation
+
+Basic view navigation is accomplished using a StatefulWidget with NavigationRails.
+
+> Actual Routing not implemented yet.
