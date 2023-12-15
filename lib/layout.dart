@@ -43,8 +43,8 @@ class _AppState extends State<App> {
                       label: Text("Todo List"),
                     ),
                     NavigationRailDestination(
-                      icon: Icon(Icons.settings),
-                      label: Text("Settings"),
+                      icon: Icon(Icons.science),
+                      label: Text("Rick and Morty"),
                     ),
                   ],
                   onDestinationSelected: (value) {

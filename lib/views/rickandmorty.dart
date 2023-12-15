@@ -1,46 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:todolist/data/api/rick_morty_api.dart' as rick_morty_api;
+
 export 'rickandmorty.dart';
-
-class Character {
-  final String name;
-  final String status;
-  final String species;
-  final String imgUrl;
-
-  Character({
-    required this.name,
-    required this.status,
-    required this.species,
-    required this.imgUrl,
-  });
-}
-
-class Characters {
-  final List<dynamic> characters;
-  final int count;
-  final String next;
-
-  Characters({
-    required this.characters,
-    required this.count,
-    required this.next,
-  });
-
-  Characters.fromJson(Map<String, dynamic> json)
-      : characters = json['results'],
-        count = json['info']['count'],
-        next = json['info']['next'];
-
-  Map<String, dynamic> toJson() => {
-        'results': characters,
-        'info': {
-          'count': count,
-          'next': next,
-        }
-      };
-}
 
 class RickAndMorty extends StatefulWidget {
   const RickAndMorty({Key? key}) : super(key: key);
@@ -49,25 +10,15 @@ class RickAndMorty extends StatefulWidget {
 }
 
 class _RickAndMortyState extends State<RickAndMorty> {
-  late Future<Characters> rickAndMortyResponse;
-  Future<Characters> fetchCharacter() async {
-    var response =
-        await http.get(Uri.parse('https://rickandmortyapi.com/api/character'));
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to load characters');
-    }
-    var jsonResponse = jsonDecode(response.body) as Map<String, dynamic>;
-    final apiResponse = Characters.fromJson(jsonResponse);
-    return apiResponse;
-  }
+  late Future<rick_morty_api.Characters> rickAndMortyResponse;
 
   @override
   void initState() {
     super.initState();
-    rickAndMortyResponse = fetchCharacter();
+    rickAndMortyResponse = rick_morty_api.fetchCharacter();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +28,7 @@ class _RickAndMortyState extends State<RickAndMorty> {
           child: Column(
         children: [
           const Text('Rick and Morty'),
-          FutureBuilder<Characters>(
+          FutureBuilder<rick_morty_api.Characters>(
             future: rickAndMortyResponse,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,14 +40,7 @@ class _RickAndMortyState extends State<RickAndMorty> {
                   child: ListView(
                     children: [
                       for (var character in snapshot.data!.characters)
-                        CharacterCard(
-                          character: Character(
-                            name: character['name'],
-                            status: character['status'],
-                            species: character['species'],
-                            imgUrl: character['image'],
-                          ),
-                        )
+                        CharacterCard(character: character)
                     ],
                   ),
                 );
@@ -111,19 +55,24 @@ class _RickAndMortyState extends State<RickAndMorty> {
 
 class CharacterCard extends StatelessWidget {
   const CharacterCard({Key? key, required this.character}) : super(key: key);
-  final Character character;
+  final rick_morty_api.Character character;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          Image.network(character.imgUrl),
-          Text(character.name),
-          Text(character.status),
-          Text(character.species),
-        ],
-      ),
+    return Column(
+      children: [
+        const SizedBox(height: 10),
+        Card(
+          child: Column(
+            children: [
+              Image.network(character.imgUrl),
+              Text(character.name),
+              Text(character.status),
+              Text(character.species),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
