@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/views/todo.dart';
-import 'package:todolist/views/rickandmorty.dart';
+import 'package:todolist/views/rick_and_morty.dart';
+import 'package:todolist/views/todo_fetch.dart';
 
 Widget pageBuilder(int selectedIndex) {
   Widget page;
@@ -8,9 +9,14 @@ Widget pageBuilder(int selectedIndex) {
     case 0:
       page = const TodoList(title: "Flutter Todo List");
       break;
-
-    default:
+    case 1:
       page = const RickAndMorty();
+      break;
+    case 2:
+      page = const TodoListFetch();
+      break;
+    default:
+      page = const Placeholder();
   }
   return page;
 }
@@ -23,7 +29,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  var selectedIndex = 0;
+  var selectedIndex = 2;
   @override
   Widget build(BuildContext context) {
     final page = pageBuilder(selectedIndex);
@@ -45,6 +51,10 @@ class _AppState extends State<App> {
                     NavigationRailDestination(
                       icon: Icon(Icons.science),
                       label: Text("Rick and Morty"),
+                    ),
+                    NavigationRailDestination(
+                      icon: Icon(Icons.checklist),
+                      label: Text("Todo + Fecth"),
                     ),
                   ],
                   onDestinationSelected: (value) {
