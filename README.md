@@ -12,6 +12,10 @@
 
 ### 2. [FutureBuilder usage](./lib/views/rickandmorty.dart)
 
+### 3. [POST, PUT methods using Http](./lib/data/api/todo_list_api.dart)
+
+### 4. [POST, PUT methods in Render](./lib/views/todo_fetch.dart)
+
 ## Serialization
 
 To format data the recommended way is using Classes for serialization.
