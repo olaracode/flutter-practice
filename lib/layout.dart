@@ -38,31 +38,29 @@ class _AppState extends State<App> {
         return Scaffold(
           body: Row(
             children: [
-              SafeArea(
-                child: NavigationRail(
-                  extended: constraints.maxWidth > 600,
-                  backgroundColor: Colors.red.shade200,
-                  selectedIndex: selectedIndex,
-                  destinations: const [
-                    NavigationRailDestination(
-                      icon: Icon(Icons.list),
-                      label: Text("Todo List"),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.science),
-                      label: Text("Rick and Morty"),
-                    ),
-                    NavigationRailDestination(
-                      icon: Icon(Icons.checklist),
-                      label: Text("Todo + Fecth"),
-                    ),
-                  ],
-                  onDestinationSelected: (value) {
-                    setState(() {
-                      selectedIndex = value;
-                    });
-                  },
-                ),
+              NavigationRail(
+                extended: constraints.maxWidth > 600,
+                backgroundColor: Colors.red.shade200,
+                selectedIndex: selectedIndex,
+                destinations: const [
+                  NavigationRailDestination(
+                    icon: Icon(Icons.list),
+                    label: Text("Todo List"),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.science),
+                    label: Text("Rick and Morty"),
+                  ),
+                  NavigationRailDestination(
+                    icon: Icon(Icons.checklist),
+                    label: Text("Todo + Fecth"),
+                  ),
+                ],
+                onDestinationSelected: (value) {
+                  setState(() {
+                    selectedIndex = value;
+                  });
+                },
               ),
               Expanded(
                 child: Container(

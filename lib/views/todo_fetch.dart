@@ -60,6 +60,12 @@ class _TodosState extends State<Todos> {
   void deleteTodo(String id) {
     futureTodos.then((todoList) {
       todoList.todos.removeWhere((todo) => todo.id == id);
+      if (todoList.todos.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: const Text("Cant delete last todo"),
+            backgroundColor: Colors.red.shade600));
+        return;
+      }
       todo_api.updateTodoList(todoList.todos).then((res) {
         setState(() {
           futureTodos = todo_api.getTodos();
@@ -135,7 +141,9 @@ class _TodosState extends State<Todos> {
                         child: ListTile(
                           title: Text(todo.label),
                           trailing: Container(
-                            width: 80, // Adjust this value as needed
+                            width: MediaQuery.of(context).size.width > 500
+                                ? 80
+                                : 100, // Adjust this value as needed
                             child: Row(
                               children: [
                                 IconButton(
@@ -146,9 +154,7 @@ class _TodosState extends State<Todos> {
                                 Checkbox(
                                   value: todo.done,
                                   onChanged: (value) {
-                                    setState(() {
-                                      checkTodo(todo.id ?? "");
-                                    });
+                                    checkTodo(todo.id ?? "");
                                   },
                                 ),
                                 // Add your delete button here

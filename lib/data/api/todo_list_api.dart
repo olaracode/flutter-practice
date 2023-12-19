@@ -65,8 +65,6 @@ Future<void> createTodoList() async {
 }
 
 Future<void> updateTodoList(List<Todo> newList) async {
-  print(newList);
-
   final response = await put(
     Uri.parse(API_URL),
     body: jsonEncode(newList.map((todo) => todo.toJson()).toList()),
